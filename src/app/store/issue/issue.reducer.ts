@@ -1,8 +1,7 @@
-import { createReducer, on } from '@ngrx/store';
-import { IssueActions } from './issue.actions';
-import { initialState } from './issue.state';
+import { ActionReducer, createReducer, on } from '@ngrx/store';
 import { produce } from 'immer';
-import { loggingMetaReducer } from '../meta-reducers';
+import { IssueActions } from './issue.actions';
+import { initialState, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
@@ -16,4 +15,11 @@ export const reducer = createReducer(
   )
 );
 
-export const issueReducer = loggingMetaReducer(reducer);
+export const issueReducer: ActionReducer<IssueState> = (state, action) => {
+  try {
+    return reducer(state, action);
+  } catch (error) {
+    console.error(error);
+    return state ?? initialState;
+  }
+};
