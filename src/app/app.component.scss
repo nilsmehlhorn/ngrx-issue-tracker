@@ -14,7 +14,11 @@ header {
     font-weight: normal;
   }
 
-  & > * {
+  h1, a {
     margin: 0 24px 0 0;
+  }
+
+  button {
+    margin-left: auto;
   }
 }

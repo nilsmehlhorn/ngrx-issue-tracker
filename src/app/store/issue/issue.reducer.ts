@@ -2,8 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import * as IssueActions from './issue.actions';
 import { initialState } from './issue.state';
 import produce from 'immer';
+import { loggingMetaReducer } from '../meta-reducers';
 
-export const issueReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(IssueActions.submit, (state, { issue }) =>
     produce(state, (draft) => {
@@ -14,3 +15,5 @@ export const issueReducer = createReducer(
     })
   )
 );
+
+export const issueReducer = loggingMetaReducer(reducer);
