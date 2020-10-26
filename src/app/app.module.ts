@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { IssuesComponent } from './components/issues/issues.component';
+import { NewIssueComponent } from './components/new-issue/new-issue.component';
 import { modules } from './modules/modules';
 import { reducers } from './store';
-import { IssuesComponent } from './components/issues/issues.component';
 
 @NgModule({
-  declarations: [AppComponent, IssuesComponent],
+  declarations: [AppComponent, IssuesComponent, NewIssueComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducers),
     modules,
   ],
