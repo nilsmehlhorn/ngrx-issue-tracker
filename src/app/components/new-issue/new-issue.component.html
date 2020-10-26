@@ -1,0 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label for="text">Title</label>
+  <input formControlName="title" type="text" id="title" />
+
+  <label for="description">Description</label>
+  <input formControlName="description" type="text" id="description" />
+
+  <label for="priority">Priority</label>
+  <select formControlName="priority" id="priority">
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+
+  <button [disabled]="!form.valid" type="submit">Submit</button>
+</form>
