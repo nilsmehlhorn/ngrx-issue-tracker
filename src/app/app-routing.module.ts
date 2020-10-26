@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CounterComponent } from './components/counter/counter.component';
+import { IssuesComponent } from './components/issues/issues.component';
 
-const routes: Routes = [{ path: '', component: CounterComponent }];
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'issues' },
+  { path: 'issues', component: IssuesComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
