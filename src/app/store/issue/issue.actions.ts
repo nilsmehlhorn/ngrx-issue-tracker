@@ -17,3 +17,8 @@ export const submit = createAction('[Issue] Submit', (issue: Issue) => {
 });
 
 export const search = createAction('[Issue] Search', props<{ text: string }>());
+
+export const resolve = createAction(
+  '[Issue] Resolve',
+  props<{ issue: Issue }>()
+);

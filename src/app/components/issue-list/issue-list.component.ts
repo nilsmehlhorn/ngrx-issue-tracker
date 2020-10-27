@@ -21,4 +21,10 @@ export class IssueListComponent {
   search(text: string): void {
     this.store.dispatch(IssueActions.search({ text }));
   }
+
+  resolve(issue: Issue): void {
+    this.store.dispatch(
+      IssueActions.resolve({ issue: { ...issue, resolved: true } })
+    );
+  }
 }
