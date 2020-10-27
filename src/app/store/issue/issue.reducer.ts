@@ -20,13 +20,19 @@ export const reducer = createReducer(
       text,
     },
   })),
-  on(IssueActions.resolve, (state, { issue }) => ({
-    ...state,
-    entities: {
-      ...state.entities,
-      [issue.id]: issue,
-    },
-  }))
+  on(IssueActions.resolve, (state, { issueId }) => {
+    const issue = state.entities[issueId];
+    return {
+      ...state,
+      entities: {
+        ...state.entities,
+        [issueId]: {
+          ...issue,
+          resolved: true,
+        },
+      },
+    };
+  })
 );
 
 export const issueReducer = (state: IssueState, action: Action): IssueState => {

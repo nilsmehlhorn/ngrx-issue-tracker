@@ -20,5 +20,5 @@ export const search = createAction('[Issue] Search', props<{ text: string }>());
 
 export const resolve = createAction(
   '[Issue] Resolve',
-  props<{ issue: Issue }>()
+  props<{ issueId: string }>()
 );
