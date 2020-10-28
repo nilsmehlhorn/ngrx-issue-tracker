@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,9 +11,10 @@ import { IssueDetailComponent } from './components/issue-detail/issue-detail.com
 import { IssueListComponent } from './components/issue-list/issue-list.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { NewIssueComponent } from './components/new-issue/new-issue.component';
-import { DatabaseService } from './services/database.service';
 import { modules } from './modules/modules';
+import { DatabaseService } from './services/database.service';
 import { metaReducers, reducers } from './store';
+import { IssueEffects } from './store/issue/issue.effects';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,9 @@ import { metaReducers, reducers } from './store';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([IssueEffects]),
     modules,
     InMemoryWebApiModule.forRoot(DatabaseService),
   ],

@@ -22,6 +22,6 @@ export class NewIssueComponent {
 
   submit(): void {
     const issue = this.form.value;
-    this.store.dispatch(IssueActions.submit(issue));
+    this.store.dispatch(IssueActions.submit({ issue }));
   }
 }
