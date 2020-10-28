@@ -3,12 +3,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IssueDetailComponent } from './components/issue-detail/issue-detail.component';
 import { IssueListComponent } from './components/issue-list/issue-list.component';
 import { IssuesComponent } from './components/issues/issues.component';
 import { NewIssueComponent } from './components/new-issue/new-issue.component';
+import { DatabaseService } from './services/database.service';
 import { modules } from './modules/modules';
 import { metaReducers, reducers } from './store';
 
@@ -27,6 +29,7 @@ import { metaReducers, reducers } from './store';
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     modules,
+    InMemoryWebApiModule.forRoot(DatabaseService),
   ],
   providers: [],
   bootstrap: [AppComponent],
