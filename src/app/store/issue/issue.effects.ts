@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { IssueService } from '../../services/issue.service';
+import { NotificationService } from '../../services/notification.service';
 import * as IssueActions from './issue.actions';
 
 @Injectable()
@@ -40,10 +41,21 @@ export class IssueEffects implements OnInitEffects {
     )
   );
 
+  notification$ = createEffect(
+    () =>
+      this.action$.pipe(
+        ofType(IssueActions.submitSuccess),
+        tap(({ issue }) => {
+          this.notifications.info(`Issue submitted: ${issue.title}`);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private action$: Actions,
     private issues: IssueService,
-    private store: Store
+    private notifications: NotificationService
   ) {}
 
   ngrxOnInitEffects(): Action {
