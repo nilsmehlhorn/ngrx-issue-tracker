@@ -23,3 +23,10 @@ export const resolveFailure = createAction(
   '[Issue] Resolve Failure',
   props<{ issueId: string }>()
 );
+
+export const load = createAction('[Issue] Load');
+
+export const loadSuccess = createAction(
+  '[Issue] Load Success',
+  props<{ issues: Issue[] }>()
+);
