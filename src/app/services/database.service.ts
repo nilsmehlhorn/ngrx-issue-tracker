@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
+import { Observable } from 'rxjs';
 import { Issue } from '../models/issue';
 import { randomId } from '../util';
 
@@ -21,6 +22,27 @@ export class DatabaseService implements InMemoryDbService {
         },
       ],
     };
+  }
+
+  patch({
+    collectionName,
+    collection,
+    id,
+    utils,
+  }: RequestInfo): Observable<Response> | undefined {
+    if (collectionName === 'issues' && id) {
+      const issue = collection.find((i) => i.id === id);
+      if (issue) {
+        const resolved = { ...issue, resolved: true };
+        collection[collection.indexOf(issue)] = resolved;
+        return utils.createResponse$(() => ({
+          body: resolved,
+          status: 200,
+          statusText: 'OK',
+        }));
+      }
+    }
+    return undefined;
   }
 
   genId(): string {

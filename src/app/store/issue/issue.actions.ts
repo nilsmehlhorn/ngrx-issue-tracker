@@ -16,3 +16,10 @@ export const resolve = createAction(
   '[Issue] Resolve',
   props<{ issueId: string }>()
 );
+
+export const resolveSuccess = createAction('[Issue] Resolve Success');
+
+export const resolveFailure = createAction(
+  '[Issue] Resolve Failure',
+  props<{ issueId: string }>()
+);
