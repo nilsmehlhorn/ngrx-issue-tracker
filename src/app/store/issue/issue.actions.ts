@@ -8,6 +8,8 @@ export const submitSuccess = createAction(
   props<{ issue: Issue }>()
 );
 
+export const submitFailure = createAction('[Issue] Submit Failure');
+
 export const search = createAction('[Issue] Search', props<{ text: string }>());
 
 export const resolve = createAction(

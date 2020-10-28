@@ -12,6 +12,7 @@ export interface IssueState {
   entities: Issues;
   filter: Filter;
   loaded: boolean;
+  loading: boolean;
 }
 
 export const initialState: IssueState = {
@@ -20,4 +21,5 @@ export const initialState: IssueState = {
     text: '',
   },
   loaded: false,
+  loading: false,
 };

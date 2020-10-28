@@ -5,11 +5,20 @@ import { initialState, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
+  on(IssueActions.submit, (state) => ({
+    ...state,
+    loading: true,
+  })),
   on(IssueActions.submitSuccess, (state, { issue }) =>
     produce(state, (draft) => {
       draft.entities[issue.id] = issue;
+      draft.loading = false;
     })
   ),
+  on(IssueActions.submitFailure, (state) => ({
+    ...state,
+    loading: false,
+  })),
   on(IssueActions.search, (state, { text }) => ({
     ...state,
     filter: {
