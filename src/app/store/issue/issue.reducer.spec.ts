@@ -1,9 +1,16 @@
 import { INIT } from '@ngrx/store';
 import * as IssueActions from './issue.actions';
+import { IssueFactory } from './issue.factory.spec';
 import { issueReducer } from './issue.reducer';
-import { initialState, IssueState } from './issue.state';
+import { initialState } from './issue.state';
 
 describe('Issue Reducer', () => {
+  let factory: IssueFactory;
+
+  beforeEach(() => {
+    factory = new IssueFactory();
+  });
+
   describe('init action', () => {
     it('should return the initial state', () => {
       const nextState = issueReducer(undefined, { type: INIT });
@@ -20,22 +27,16 @@ describe('Issue Reducer', () => {
 
   describe('resolve', () => {
     it('should resolve issue', () => {
-      const issueId = 'issue-1';
-      const state: IssueState = {
-        ...initialState,
+      const issue = factory.entity();
+      const state = factory.state({
         loaded: true,
-        entities: {
-          [issueId]: {
-            id: issueId,
-            title: 'Test Issue',
-            description: 'This is a test description',
-            priority: 'low',
-            resolved: false,
-          },
-        },
-      };
-      const nextState = issueReducer(state, IssueActions.resolve({ issueId }));
-      expect(nextState.entities[issueId].resolved).toBeTruthy();
+        entities: factory.entities(issue),
+      });
+      const nextState = issueReducer(
+        state,
+        IssueActions.resolve({ issueId: issue.id })
+      );
+      expect(nextState.entities[issue.id].resolved).toBeTruthy();
     });
   });
 });
