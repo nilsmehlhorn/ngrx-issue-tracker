@@ -14,6 +14,7 @@ import { NewIssueComponent } from './components/new-issue/new-issue.component';
 import { modules } from './modules/modules';
 import { DatabaseService } from './services/database.service';
 import { metaReducers, reducers } from './store';
+import { HydrationEffects } from './store/hydration/hydration.effects';
 import { IssueEffects } from './store/issue/issue.effects';
 
 @NgModule({
@@ -30,7 +31,7 @@ import { IssueEffects } from './store/issue/issue.effects';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([IssueEffects]),
+    EffectsModule.forRoot([IssueEffects, HydrationEffects]),
     modules,
     InMemoryWebApiModule.forRoot(DatabaseService),
   ],
