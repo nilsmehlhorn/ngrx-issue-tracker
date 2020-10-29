@@ -1,2 +1,8 @@
-<app-new-issue></app-new-issue>
-<app-issue-list></app-issue-list>
+<app-new-issue (submitNew)="onSubmit($event)"></app-new-issue>
+<app-issue-list
+  *ngIf="issues$ | async as issues; else loading"
+  [issues]="issues"
+  (resolve)="onResolve($event)"
+  (search)="onSearch($event)"
+></app-issue-list>
+<ng-template #loading>Loading...</ng-template>

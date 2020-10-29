@@ -10,7 +10,7 @@ import { IssueFactory } from '../../store/issue/issue.factory.spec';
 import * as fromIssue from '../../store/issue/issue.selectors';
 import { IssueListComponent } from './issue-list.component';
 
-describe('IssueListComponent', () => {
+xdescribe('IssueListComponent', () => {
   describe('Unit Tests', () => {
     let component: IssueListComponent;
     let fixture: ComponentFixture<IssueListComponent>;
