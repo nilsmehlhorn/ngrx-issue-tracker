@@ -4,6 +4,7 @@ import { skipWhile } from 'rxjs/operators';
 import { RootState } from '..';
 import { Issue } from '../../models/issue';
 import { Filter, Issues } from './issue.state';
+import * as fromRouter from '../router/router.selectors';
 
 export const selectFeature = (state: RootState) => state.issue;
 
@@ -75,3 +76,11 @@ export const selectAllLoaded = () =>
     skipWhile((state: RootState) => !selectLoaded(state)),
     select(selectAll)
   );
+
+export const selectActiveId = fromRouter.selectRouteParam('id');
+
+export const selectActive = createSelector(
+  selectEntities,
+  selectActiveId,
+  (entities, id) => entities[id]
+);

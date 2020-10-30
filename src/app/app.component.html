@@ -2,6 +2,7 @@
   <h1>Issue Tracker</h1>
   <a routerLink="/issues">Issues</a>
   <a routerLink="/settings">Settings</a>
+  <app-loader *ngIf="navigationLoading$ | async"></app-loader>
   <div *ngIf="stats$ | async as stats">
     <span>{{ stats.resolved }} / {{ stats.total }} resolved</span>
     <button (click)="reset()">Reset</button>
