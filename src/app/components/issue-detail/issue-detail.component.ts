@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Issue } from '../../models/issue';
-import * as fromIssue from '../../store/issue/issue.selectors';
+import { IssueCollectionService } from '../../services/issue-collection.service';
 
 @Component({
   selector: 'app-issue-detail',
@@ -13,7 +12,7 @@ import * as fromIssue from '../../store/issue/issue.selectors';
 export class IssueDetailComponent {
   issue$: Observable<Issue>;
 
-  constructor(private store: Store) {
-    this.issue$ = this.store.select(fromIssue.selectActive);
+  constructor(private issues: IssueCollectionService) {
+    this.issue$ = this.issues.active$;
   }
 }
