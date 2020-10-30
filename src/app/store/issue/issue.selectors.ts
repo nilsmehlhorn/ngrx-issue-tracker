@@ -3,19 +3,17 @@ import { pipe } from 'rxjs';
 import { skipWhile } from 'rxjs/operators';
 import { RootState } from '..';
 import { Issue } from '../../models/issue';
-import { Filter, Issues } from './issue.state';
 import * as fromRouter from '../router/router.selectors';
+import { adapter, Filter, Issues } from './issue.state';
 
 export const selectFeature = (state: RootState) => state.issue;
 
-export const selectEntities = createSelector(
-  selectFeature,
-  ({ entities }) => entities
-);
-
-export const selectAll = createSelector(selectEntities, (entities) =>
-  Object.values(entities)
-);
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal,
+} = adapter.getSelectors(selectFeature);
 
 export const selectFilter = createSelector(
   selectFeature,
