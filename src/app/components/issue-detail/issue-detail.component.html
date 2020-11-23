@@ -1,0 +1,7 @@
+<section *ngIf="issue$ | async as issue">
+  <h2>
+    {{ issue.title }}
+    <small>{{ issue.priority }}</small>
+  </h2>
+  <p>{{ issue.description }}</p>
+</section>
