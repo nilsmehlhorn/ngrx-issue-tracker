@@ -1,3 +1,9 @@
+<input
+  placeholder="Search ..."
+  #searchInput
+  type="text"
+  (input)="search(searchInput.value)"
+/>
 <ul>
   <li *ngFor="let issue of issues$ | async">
     <h2>
