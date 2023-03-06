@@ -53,7 +53,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/modules/modules.ts",
+                  "with": "src/app/modules/modules.prod.ts"
+                }
+              ]
             },
             "development": {
               "buildOptimizer": false,
