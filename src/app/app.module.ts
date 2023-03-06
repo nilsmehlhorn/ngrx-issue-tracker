@@ -4,12 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CounterComponent } from './components/counter/counter.component';
+import { IssuesComponent } from './components/issues/issues.component';
 import { modules } from './modules/modules';
 import { reducers } from './store';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent],
+  declarations: [AppComponent, IssuesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
