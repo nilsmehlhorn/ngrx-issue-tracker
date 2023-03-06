@@ -19,10 +19,10 @@ export const multiply = createAction(
 
 export const countReducer = createReducer(
   0,
-  on(increment, (count) => {
+  on(increment, (count): number => {
     return count + 1;
   }),
-  on(multiply, (count, { factor }) => count * factor)
+  on(multiply, (count, { factor }): number => count * factor)
 );
 
 export const reducers: ActionReducerMap<State> = {
