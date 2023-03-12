@@ -9,5 +9,7 @@ export const IssueActions = createActionGroup({
     'Submit Error': emptyProps(),
     Search: props<{ text: string }>(),
     Resolve: props<{ issueId: string }>(),
+    'Resolve Success': emptyProps(),
+    'Resolve Error': props<{ issueId: string }>(),
   },
 });

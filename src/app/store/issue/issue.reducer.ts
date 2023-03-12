@@ -50,6 +50,19 @@ export const reducer = createReducer(
         },
       },
     };
+  }),
+  on(IssueActions.resolveError, (state, { issueId }): IssueState => {
+    const issue = state.entities[issueId];
+    return {
+      ...state,
+      entities: {
+        ...state.entities,
+        [issueId]: {
+          ...issue,
+          resolved: false,
+        },
+      },
+    };
   })
 );
 

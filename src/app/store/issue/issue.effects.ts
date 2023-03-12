@@ -21,6 +21,18 @@ export class IssueEffects {
     );
   });
 
+  resolve$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(IssueActions.resolve),
+      mergeMap(({ issueId }) =>
+        this.issues.resolve(issueId).pipe(
+          map(() => IssueActions.resolveSuccess()),
+          catchError(() => of(IssueActions.resolveError({ issueId })))
+        )
+      )
+    );
+  });
+
   constructor(
     private action$: Actions,
     private issues: IssueService,
