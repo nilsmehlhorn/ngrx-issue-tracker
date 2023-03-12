@@ -14,5 +14,6 @@ export const IssueActions = createActionGroup({
       };
     },
     Search: props<{ text: string }>(),
+    Resolve: props<{ issue: Issue }>(),
   },
 });
