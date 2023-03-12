@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Issue } from '../../models/issue';
-import { Filter, IssueState } from './issue.state';
+import { Filter, Issues, IssueState } from './issue.state';
 
 export const selectFeature = createFeatureSelector<IssueState>('issue');
 
@@ -47,3 +47,6 @@ export const selectStats = createSelector(selectAll, (issues): IssueStats => {
     resolved: resolved.length,
   };
 });
+
+export const selectOne = (id: string) =>
+  createSelector(selectEntities, (entities: Issues) => entities[id]);
