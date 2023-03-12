@@ -1,4 +1,7 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, select } from '@ngrx/store';
+import { pipe } from 'rxjs';
+import { skipWhile } from 'rxjs/operators';
+import { RootState } from '..';
 import { Issue } from '../../models/issue';
 import { Filter, Issues, IssueState } from './issue.state';
 
@@ -50,3 +53,14 @@ export const selectStats = createSelector(selectAll, (issues): IssueStats => {
 
 export const selectOne = (id: string) =>
   createSelector(selectEntities, (entities: Issues) => entities[id]);
+
+export const selectLoaded = createSelector(
+  selectFeature,
+  ({ loaded }) => loaded
+);
+
+export const selectAllLoaded = () =>
+  pipe(
+    skipWhile((state: RootState) => !selectLoaded(state)),
+    select(selectAll)
+  );
