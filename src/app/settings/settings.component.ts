@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Priority } from '../models/priority';
-import { SettingsActions } from './store/settings.actions';
-import * as fromSettings from './store/settings.selectors';
+import { NotificationActions } from './store/notification/notification.actions';
+import * as fromNotification from './store/notification/notification.selectors';
 
 @Component({
   selector: 'app-settings',
@@ -15,14 +15,12 @@ export class SettingsComponent {
 
   constructor(private store: Store) {
     this.notificationPriority$ = this.store.select(
-      fromSettings.selectNotificationPriority
+      fromNotification.selectPriority
     );
   }
 
   changeNotificationPriority(selectedPriority: string): void {
-    const notificationPriority = selectedPriority as Priority;
-    this.store.dispatch(
-      SettingsActions.changeNotificationPriority({ notificationPriority })
-    );
+    const priority = selectedPriority as Priority;
+    this.store.dispatch(NotificationActions.changePriority({ priority }));
   }
 }
