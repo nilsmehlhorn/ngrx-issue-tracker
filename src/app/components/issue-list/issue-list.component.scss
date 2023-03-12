@@ -1,0 +1,18 @@
+@import "../../../styles/variables";
+
+ul {
+  list-style-type: none;
+  margin: 8px 0;
+  padding: 0;
+
+  li {
+    border: 1px solid $light-grey;
+    padding: 0 16px;
+
+    h2 {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+  }
+}
