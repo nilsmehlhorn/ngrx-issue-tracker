@@ -5,12 +5,9 @@ import { initialState, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
-  on(IssueActions.submit, (state, { issue }) =>
+  on(IssueActions.submitSuccess, (state, { issue }) =>
     produce(state, (draft) => {
-      draft.entities[issue.id] = {
-        ...issue,
-        resolved: false,
-      };
+      draft.entities[issue.id] = issue;
     })
   ),
   on(

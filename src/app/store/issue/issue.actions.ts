@@ -1,18 +1,11 @@
 import { createActionGroup, props } from '@ngrx/store';
 import { Issue } from '../../models/issue';
-import { randomId } from '../../random-id';
 
 export const IssueActions = createActionGroup({
   source: 'Issues',
   events: {
-    Submit: (issue: Issue) => {
-      return {
-        issue: {
-          ...issue,
-          id: randomId(),
-        },
-      };
-    },
+    Submit: props<{ issue: Issue }>(),
+    'Submit Success': props<{ issue: Issue }>(),
     Search: props<{ text: string }>(),
     Resolve: props<{ issueId: string }>(),
   },
