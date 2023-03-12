@@ -1,13 +1,31 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
-import { produce } from 'immer';
 import { IssueActions } from './issue.actions';
 import { initialState, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
-  on(IssueActions.submitSuccess, (state, { issue }) =>
-    produce(state, (draft) => {
-      draft.entities[issue.id] = issue;
+  on(
+    IssueActions.submit,
+    (state): IssueState => ({
+      ...state,
+      loading: true,
+    })
+  ),
+  on(IssueActions.submitSuccess, (state, { issue }): IssueState => {
+    return {
+      ...state,
+      entities: {
+        ...state.entities,
+        [issue.id]: issue,
+      },
+      loading: false,
+    };
+  }),
+  on(
+    IssueActions.submitError,
+    (state): IssueState => ({
+      ...state,
+      loading: false,
     })
   ),
   on(

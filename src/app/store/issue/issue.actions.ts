@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Issue } from '../../models/issue';
 
 export const IssueActions = createActionGroup({
@@ -6,6 +6,7 @@ export const IssueActions = createActionGroup({
   events: {
     Submit: props<{ issue: Issue }>(),
     'Submit Success': props<{ issue: Issue }>(),
+    'Submit Error': emptyProps(),
     Search: props<{ text: string }>(),
     Resolve: props<{ issueId: string }>(),
   },

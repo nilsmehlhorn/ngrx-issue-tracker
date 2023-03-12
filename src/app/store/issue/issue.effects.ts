@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { RootState } from '..';
 import { IssueService } from '../../services/issue.service';
 import { IssueActions } from './issue.actions';
-import * as fromIssue from './issue.selectors';
 
 @Injectable()
 export class IssueEffects {
   submit$ = createEffect(() => {
     return this.action$.pipe(
       ofType(IssueActions.submit),
-      concatLatestFrom(() => this.store.select(fromIssue.selectAll)),
-      filter(([action, issues]) =>
-        issues.every(({ title }) => title !== action.issue.title)
-      ),
-      mergeMap(([action, issues]) => this.issues.save(action.issue)),
-      map((issue) => IssueActions.submitSuccess({ issue }))
+      mergeMap((action) =>
+        this.issues.save(action.issue).pipe(
+          map((issue) => IssueActions.submitSuccess({ issue })),
+          catchError(() => of(IssueActions.submitError()))
+        )
+      )
     );
   });
 
