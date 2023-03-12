@@ -1,0 +1,13 @@
+<h2>Settings</h2>
+<label for="priority">Notification Priority</label>
+<select
+  formControlName="priority"
+  id="priority"
+  #prioritySelect
+  [value]="notificationPriority$ | async"
+  (change)="changeNotificationPriority(prioritySelect.value)"
+>
+  <option value="low">Low</option>
+  <option value="medium">Medium</option>
+  <option value="high">High</option>
+</select>
