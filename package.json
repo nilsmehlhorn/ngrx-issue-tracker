@@ -22,6 +22,7 @@
     "@ngrx/effects": "^15.4.0",
     "@ngrx/store": "^15.4.0",
     "@ngrx/store-devtools": "^15.4.0",
+    "angular-in-memory-web-api": "^0.15.0",
     "immer": "^9.0.19",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
