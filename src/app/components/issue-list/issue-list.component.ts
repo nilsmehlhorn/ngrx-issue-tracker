@@ -22,8 +22,6 @@ export class IssueListComponent {
   }
 
   resolve(issue: Issue): void {
-    this.store.dispatch(
-      IssueActions.resolve({ issue: { ...issue, resolved: true } })
-    );
+    this.store.dispatch(IssueActions.resolve({ issueId: issue.id }));
   }
 }
