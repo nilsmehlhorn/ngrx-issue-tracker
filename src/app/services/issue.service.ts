@@ -14,4 +14,8 @@ export class IssueService {
   resolve(issueId: string): Observable<void> {
     return this.http.patch<void>(`/api/issues/${issueId}`, null);
   }
+
+  getAll(): Observable<Issue[]> {
+    return this.http.get<Issue[]>(`/api/issues`);
+  }
 }

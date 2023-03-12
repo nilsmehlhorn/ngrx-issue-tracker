@@ -11,5 +11,7 @@ export const IssueActions = createActionGroup({
     Resolve: props<{ issueId: string }>(),
     'Resolve Success': emptyProps(),
     'Resolve Error': props<{ issueId: string }>(),
+    Load: emptyProps(),
+    'Load Success': props<{ issues: Issue[] }>(),
   },
 });

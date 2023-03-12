@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { RootState } from '..';
 import { IssueService } from '../../services/issue.service';
 import { IssueActions } from './issue.actions';
 
 @Injectable()
-export class IssueEffects {
+export class IssueEffects implements OnInitEffects {
   submit$ = createEffect(() => {
     return this.action$.pipe(
       ofType(IssueActions.submit),
@@ -33,9 +33,21 @@ export class IssueEffects {
     );
   });
 
+  load$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(IssueActions.load),
+      switchMap(() => this.issues.getAll()),
+      map((issues) => IssueActions.loadSuccess({ issues }))
+    );
+  });
+
   constructor(
     private action$: Actions,
     private issues: IssueService,
     private store: Store<RootState>
   ) {}
+
+  ngrxOnInitEffects(): Action {
+    return IssueActions.load();
+  }
 }

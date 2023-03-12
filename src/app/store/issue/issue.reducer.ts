@@ -1,6 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
 import { IssueActions } from './issue.actions';
-import { initialState, IssueState } from './issue.state';
+import { initialState, Issues, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
@@ -62,6 +62,15 @@ export const reducer = createReducer(
           resolved: false,
         },
       },
+    };
+  }),
+  on(IssueActions.loadSuccess, (state, { issues }): IssueState => {
+    const entities: Issues = {};
+    issues.forEach((issue) => (entities[issue.id] = issue));
+    return {
+      ...state,
+      entities,
+      loaded: true,
     };
   })
 );
