@@ -1,4 +1,4 @@
-import { createActionGroup } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { Issue } from '../../models/issue';
 import { randomId } from '../../random-id';
 
@@ -13,5 +13,6 @@ export const IssueActions = createActionGroup({
         },
       };
     },
+    Search: props<{ text: string }>(),
   },
 });

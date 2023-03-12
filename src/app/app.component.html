@@ -1,7 +1,10 @@
 <header>
   <h1>Issue Tracker</h1>
   <a routerLink="/issues">Issues</a>
-  <button (click)="reset()">Reset</button>
+  <div *ngIf="stats$ | async as stats">
+    <span>{{ stats.resolved }} / {{ stats.total }} resolved</span>
+    <button (click)="reset()">Reset</button>
+  </div>
 </header>
 <main>
   <router-outlet></router-outlet>

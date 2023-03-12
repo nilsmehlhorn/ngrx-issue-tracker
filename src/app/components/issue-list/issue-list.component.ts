@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Issue } from '../../models/issue';
-import { RootState } from '../../store';
+import { IssueActions } from '../../store/issue/issue.actions';
 import * as fromIssue from '../../store/issue/issue.selectors';
 
 @Component({
@@ -13,7 +13,11 @@ import * as fromIssue from '../../store/issue/issue.selectors';
 export class IssueListComponent {
   issues$: Observable<Issue[]>;
 
-  constructor(private store: Store<RootState>) {
-    this.issues$ = this.store.select(fromIssue.selectAll);
+  constructor(private store: Store) {
+    this.issues$ = this.store.select(fromIssue.selectFiltered);
+  }
+
+  search(text: string): void {
+    this.store.dispatch(IssueActions.search({ text }));
   }
 }

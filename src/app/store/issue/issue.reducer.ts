@@ -12,6 +12,16 @@ export const reducer = createReducer(
         resolved: false,
       };
     })
+  ),
+  on(
+    IssueActions.search,
+    (state, { text }): IssueState => ({
+      ...state,
+      filter: {
+        ...state.filter,
+        text,
+      },
+    })
   )
 );
 
