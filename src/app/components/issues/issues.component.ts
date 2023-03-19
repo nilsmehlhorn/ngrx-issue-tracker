@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { Issue } from '../../models/issue';
-import { IssueFacade } from '../../store/issue/issue.facade';
+import { IssueCollectionService } from '../../services/issue-collection.service';
 
 @Component({
   selector: 'app-issues',
@@ -11,21 +11,23 @@ import { IssueFacade } from '../../store/issue/issue.facade';
 export class IssuesComponent implements OnInit {
   issues$: Observable<Issue[]> = EMPTY;
 
-  constructor(private facade: IssueFacade) {}
+  constructor(private issues: IssueCollectionService) {
+    this.issues$ = this.issues.filteredEntities$;
+  }
 
   ngOnInit(): void {
-    this.issues$ = this.facade.issues$;
+    this.issues.load();
   }
 
   onSearch(text: string): void {
-    this.facade.search(text);
+    this.issues.setFilter(text);
   }
 
   onResolve(issue: Issue): void {
-    this.facade.resolve(issue.id);
+    this.issues.resolve(issue);
   }
 
   onSubmit(issue: Issue): void {
-    this.facade.submit(issue);
+    this.issues.add(issue);
   }
 }

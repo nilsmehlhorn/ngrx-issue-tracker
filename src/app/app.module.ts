@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { DefaultDataServiceConfig, EntityDataModule } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -17,8 +17,11 @@ import { NewIssueComponent } from './components/new-issue/new-issue.component';
 import { modules } from './modules/modules';
 import { DatabaseService } from './services/database.service';
 import { metaReducers, reducers } from './store';
+import {
+  defaultDataServiceConfig,
+  entityConfig,
+} from './store/entity-metadata';
 import { HydrationEffects } from './store/hydration/hydration.effects';
-import { IssueEffects } from './store/issue/issue.effects';
 import { RouterEffects } from './store/router/router.effects';
 
 @NgModule({
@@ -37,11 +40,14 @@ import { RouterEffects } from './store/router/router.effects';
     HttpClientModule,
     InMemoryWebApiModule.forRoot(DatabaseService),
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([IssueEffects, HydrationEffects, RouterEffects]),
+    EffectsModule.forRoot([HydrationEffects, RouterEffects]),
     StoreRouterConnectingModule.forRoot(),
+    EntityDataModule.forRoot(entityConfig),
     modules,
   ],
-  providers: [],
+  providers: [
+    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
