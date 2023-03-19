@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Issue } from '../../models/issue';
@@ -9,6 +9,7 @@ import * as fromIssue from '../../store/issue/issue.selectors';
   selector: 'app-issue-list',
   templateUrl: './issue-list.component.html',
   styleUrls: ['./issue-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IssueListComponent {
   issues$: Observable<Issue[]>;
@@ -23,5 +24,9 @@ export class IssueListComponent {
 
   resolve(issue: Issue): void {
     this.store.dispatch(IssueActions.resolve({ issueId: issue.id }));
+  }
+
+  trackByIssues(index: number, issue: Issue): string {
+    return issue.id;
   }
 }
