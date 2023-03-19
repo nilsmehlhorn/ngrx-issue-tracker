@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
 import { Issue } from '../../models/issue';
-import { RootState } from '../../store';
-import { IssueActions } from '../../store/issue/issue.actions';
-import * as fromIssue from '../../store/issue/issue.selectors';
+import { IssueFacade } from '../../store/issue/issue.facade';
 
 @Component({
   selector: 'app-issues',
@@ -14,21 +11,21 @@ import * as fromIssue from '../../store/issue/issue.selectors';
 export class IssuesComponent implements OnInit {
   issues$: Observable<Issue[]> = EMPTY;
 
-  constructor(private store: Store<RootState>) {}
+  constructor(private facade: IssueFacade) {}
 
   ngOnInit(): void {
-    this.issues$ = this.store.select(fromIssue.selectFiltered);
+    this.issues$ = this.facade.issues$;
   }
 
   onSearch(text: string): void {
-    this.store.dispatch(IssueActions.search({ text }));
+    this.facade.search(text);
   }
 
   onResolve(issue: Issue): void {
-    this.store.dispatch(IssueActions.resolve({ issueId: issue.id }));
+    this.facade.resolve(issue.id);
   }
 
   onSubmit(issue: Issue): void {
-    this.store.dispatch(IssueActions.submit({ issue }));
+    this.facade.submit(issue);
   }
 }
