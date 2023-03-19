@@ -2,16 +2,16 @@
   placeholder="Search ..."
   #searchInput
   type="text"
-  (input)="search(searchInput.value)"
+  (input)="onSearch(searchInput.value)"
 />
 <ul>
-  <li *ngFor="let issue of issues$ | async; trackBy: trackByIssues">
+  <li *ngFor="let issue of issues; trackBy: trackByIssues">
     <h3>
       <a [routerLink]="issue.id">{{ issue.title }}</a>
       <small>{{ issue.priority }}</small>
     </h3>
     <p>{{ issue.description }}</p>
-    <button (click)="resolve(issue)" [disabled]="issue.resolved">
+    <button (click)="onResolve(issue)" [disabled]="issue.resolved">
       {{ issue.resolved ? "Resolved" : "Resolve" }}
     </button>
   </li>
