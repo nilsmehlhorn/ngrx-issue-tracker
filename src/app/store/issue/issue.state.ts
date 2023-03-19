@@ -1,25 +1,24 @@
+import { createEntityAdapter, Dictionary, EntityState } from '@ngrx/entity';
 import { Issue } from '../../models/issue';
 
-export interface Issues {
-  [id: string]: Issue;
-}
+export type Issues = Dictionary<Issue>
 
 export interface Filter {
   text: string;
 }
 
-export interface IssueState {
-  entities: Issues;
+export interface IssueState extends EntityState<Issue> {
   filter: Filter;
   loaded: boolean;
   loading: boolean;
 }
 
-export const initialState: IssueState = {
-  entities: {},
+export const adapter = createEntityAdapter<Issue>();
+
+export const initialState: IssueState = adapter.getInitialState({
   filter: {
     text: '',
   },
   loaded: false,
   loading: false,
-};
+});

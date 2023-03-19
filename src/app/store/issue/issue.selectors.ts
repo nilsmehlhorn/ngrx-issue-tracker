@@ -4,18 +4,12 @@ import { skipWhile } from 'rxjs/operators';
 import { RootState } from '..';
 import { Issue } from '../../models/issue';
 import * as fromRouter from '../router/router.selectors';
-import { Filter, Issues, IssueState } from './issue.state';
+import { adapter, Filter, Issues, IssueState } from './issue.state';
 
 export const selectFeature = createFeatureSelector<IssueState>('issue');
 
-export const selectEntities = createSelector(
-  selectFeature,
-  ({ entities }) => entities
-);
-
-export const selectAll = createSelector(selectEntities, (entities) =>
-  Object.values(entities)
-);
+export const { selectIds, selectEntities, selectAll, selectTotal } =
+  adapter.getSelectors(selectFeature);
 
 export const selectFilter = createSelector(
   selectFeature,

@@ -1,6 +1,6 @@
 import { ActionReducer, createReducer, on } from '@ngrx/store';
 import { IssueActions } from './issue.actions';
-import { initialState, Issues, IssueState } from './issue.state';
+import { adapter, initialState, IssueState } from './issue.state';
 
 export const reducer = createReducer(
   initialState,
@@ -11,16 +11,9 @@ export const reducer = createReducer(
       loading: true,
     })
   ),
-  on(IssueActions.submitSuccess, (state, { issue }): IssueState => {
-    return {
-      ...state,
-      entities: {
-        ...state.entities,
-        [issue.id]: issue,
-      },
-      loading: false,
-    };
-  }),
+  on(IssueActions.submitSuccess, (state, { issue }) =>
+    adapter.addOne(issue, state)
+  ),
   on(
     IssueActions.submitError,
     (state): IssueState => ({
@@ -38,41 +31,32 @@ export const reducer = createReducer(
       },
     })
   ),
-  on(IssueActions.resolve, (state, { issueId }): IssueState => {
-    const issue = state.entities[issueId];
-    return {
-      ...state,
-      entities: {
-        ...state.entities,
-        [issueId]: {
-          ...issue,
+  on(IssueActions.resolve, (state, { issueId }) =>
+    adapter.updateOne(
+      {
+        id: issueId,
+        changes: {
           resolved: true,
         },
       },
-    };
-  }),
-  on(IssueActions.resolveError, (state, { issueId }): IssueState => {
-    const issue = state.entities[issueId];
-    return {
-      ...state,
-      entities: {
-        ...state.entities,
-        [issueId]: {
-          ...issue,
+      state
+    )
+  ),
+  on(IssueActions.resolveError, (state, { issueId }) =>
+    adapter.updateOne(
+      {
+        id: issueId,
+        changes: {
           resolved: false,
         },
       },
-    };
-  }),
-  on(IssueActions.loadSuccess, (state, { issues }): IssueState => {
-    const entities: Issues = {};
-    issues.forEach((issue) => (entities[issue.id] = issue));
-    return {
-      ...state,
-      entities,
-      loaded: true,
-    };
-  })
+      state
+    )
+  ),
+  on(IssueActions.loadSuccess, (state, { issues }) => ({
+    ...adapter.setAll(issues, state),
+    loaded: true,
+  }))
 );
 
 export const issueReducer: ActionReducer<IssueState> = (state, action) => {
